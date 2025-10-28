@@ -1,0 +1,108 @@
+* {
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #10171f;
+  color: #edf2f7;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.5rem;
+}
+
+button {
+  padding: 0.4rem 0.9rem;
+  background: #3a86ff;
+  color: #fff;
+  border: none;
+  border-radius: 0.45rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background: #265dbe;
+}
+
+main {
+  display: flex;
+  gap: 1rem;
+}
+
+#canvas {
+  border-radius: 0.75rem;
+  background: #050d15;
+  flex: 1;
+  max-width: calc(100% - 260px);
+}
+
+.panel {
+  width: 240px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.panel p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+#status {
+  min-height: 2rem;
+  font-size: 0.85rem;
+  color: #a5b4c5;
+}
+
+@media (max-width: 980px) {
+  main {
+    flex-direction: column;
+  }
+
+  #canvas {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .panel {
+    width: 100%;
+  }
+}
+

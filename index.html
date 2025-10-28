@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>흙과 물 흐름 시뮬레이션 MVP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>흙과 물 흐름 시뮬레이션</h1>
+      <div class="controls">
+        <button id="toggle">일시정지</button>
+        <label>시간배속
+          <input type="range" id="timeScale" min="0.1" max="8" step="0.1" value="1.0">
+          <span id="timeScaleValue">1.0x</span>
+        </label>
+        <label>물 공급량
+          <input type="range" id="waterInput" min="0" max="5" step="0.1" value="1.5">
+          <span id="waterInputValue">1.5</span>
+        </label>
+        <label>흙 점성
+          <input type="range" id="soilViscosity" min="0.1" max="2.0" step="0.1" value="0.8">
+          <span id="soilViscosityValue">0.8</span>
+        </label>
+        <label>
+          <input type="checkbox" id="showPaths" checked>
+          경로 강조
+        </label>
+      </div>
+    </header>
+    <main>
+      <canvas id="canvas" width="960" height="540"></canvas>
+      <aside class="panel">
+        <p>
+          마우스로 지형을 편집할 수 있어요. 왼쪽 드래그로 고도를 올리고,
+          Shift+드래그로 낮출 수 있습니다.
+        </p>
+        <p>
+          WebGPU는 최신 크롬에서만 지원됩니다. 페이지를 로드하면 자동으로 시뮬레이션이 시작됩니다.
+        </p>
+        <div id="status"></div>
+      </aside>
+    </main>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
+
