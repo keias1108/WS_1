@@ -64,8 +64,6 @@ fn fsMain(input : VertexOut) -> @location(0) vec4<f32> {
   let soil = soilHeight[idx];
   let water = waterHeight[idx];
 
-  let totalHeight = soil + water;
-
   let east = readSoilHeight(fx + 1, fy, width, height);
   let west = readSoilHeight(fx - 1, fy, width, height);
   let north = readSoilHeight(fx, fy - 1, width, height);
@@ -78,8 +76,10 @@ fn fsMain(input : VertexOut) -> @location(0) vec4<f32> {
   ));
 
   let lightDir = normalize(vec3<f32>(0.4, 0.5, 1.0));
-  var soilColor = vec3<f32>(0.36, 0.28, 0.22) + soil * 0.08;
-  soilColor = soilColor * (0.4 + 0.6 * max(dot(normal, lightDir), 0.0));
+  let soilBase = vec3<f32>(0.34, 0.26, 0.2);
+  let soilHighlight = vec3<f32>(0.1, 0.07, 0.05);
+  let soilStrength = clamp(soil * 3.5, 0.0, 1.0);
+  var soilColor = (soilBase + soilHighlight * soilStrength) * (0.4 + 0.6 * max(dot(normal, lightDir), 0.0));
 
   let waterFactor = clamp(water * 4.0, 0.0, 1.0);
   let waterColor = vec3<f32>(0.1, 0.25, 0.6) * (0.5 + 0.5 * max(dot(normal, lightDir), 0.0)) + water * 0.2;
@@ -87,13 +87,13 @@ fn fsMain(input : VertexOut) -> @location(0) vec4<f32> {
   var color = mix(soilColor, waterColor, waterFactor);
 
   if (params.gridSizeFlags.z > 0.5) {
-    let flowHighlight = clamp(waterPath[idx] * 1.2, 0.0, 1.0);
-    let sedimentHighlight = clamp(soilPath[idx] * 1.4, 0.0, 1.0);
-    color = color + vec3<f32>(0.07, 0.18, 0.42) * flowHighlight;
-    color = color + vec3<f32>(0.32, 0.21, 0.08) * sedimentHighlight;
+    let flowHighlight = clamp(waterPath[idx], 0.0, 1.0);
+    let sedimentHighlight = clamp(soilPath[idx], 0.0, 1.0);
+    color = color + vec3<f32>(0.07, 0.18, 0.42) * flowHighlight * 0.65;
+    color = color + vec3<f32>(0.32, 0.21, 0.08) * sedimentHighlight * 0.5;
   }
 
-  color = mix(color, vec3<f32>(0.95, 0.98, 1.0), clamp(totalHeight * 0.01, 0.0, 0.15));
+  color = clamp(color, vec3<f32>(0.0, 0.0, 0.0), vec3<f32>(1.0, 1.0, 1.0));
 
   return vec4<f32>(color, 1.0);
 }
